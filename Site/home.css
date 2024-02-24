@@ -1,0 +1,96 @@
+body {
+    font-family: "", sans-serif;
+    background-color: black;
+    color: #fff;
+    margin: 0;
+}
+
+.navbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    display: inline-block;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 10px 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.content {
+    font-family: '', sans-serif;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    display: flex;
+    margin-left: 15px;}
+
+.logo {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 50px;
+    margin-bottom: 30px;
+    display: flex;
+    margin-left: 15px;
+}
+
+.nav-link.bottom {
+    margin-top: auto;
+}
+
+.navbar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px; 
+    height: 100%;
+    opacity: 10%;
+    background-color: white; 
+}
+
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    padding: 10px;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    margin-left: 15px;
+    border-radius: 6px;
+}
+
+.nav-link:hover {
+    background-color: rgb(26, 25, 25);
+}
+
+.nav-link i {
+    margin-right: 15px;
+    font-size: 20px; 
+}
+
+.logout {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: rgba(255, 103, 103, 0.877);
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.logout:hover {
+    background-color: black;
+    border-radius: 25%;
+    color: rgba(255, 103, 103, 0.877);
+}
+
+#content {
+    margin-left: 220px;
+    margin-top: 20px;
+    width: calc(100% - 240px); 
+}

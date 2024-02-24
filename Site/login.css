@@ -1,0 +1,123 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fafafa;
+}
+
+.container, .registerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.divider {
+    border-right: 2px solid #dbdbdb;
+    height: 400px; 
+    margin: 0px 40px;
+}
+
+.login {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #262626;
+}
+
+.login input[type="text"],
+.login input[type="password"],
+.login button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.login button {
+    background-color: #3897f0;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login button:hover {
+    background-color: #3578e5;
+}
+
+.logo {
+  font-family: "League Spartan", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 120px;
+  font-style: normal;
+}
+
+.forgot-password, .forgot-username {
+    text-align: center;
+    opacity: 50%;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: #1f53c4;
+    text-decoration: none;
+}
+
+.forgot-password:hover, .forgot-username:hover {
+    text-decoration: underline;
+}
+
+.register button {
+    color: #69f04e;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register button:hover {
+    background-color: #69f04e;
+}
+
+.ou {
+    text-align: center;
+    font-size: 20px;
+    font-optical-sizing: auto;
+    font-family: "League Spartan", sans-serif;
+    display: block;
+    margin-top: 10px;
+    opacity: 60%;
+    margin-bottom: 20px;
+    color: black;
+    text-decoration: none;
+}
+
+h3 {
+    margin-top: auto;
+    text-align: center;
+    font-size: 15px;
+    font-optical-sizing: auto;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: rgba(0, 0, 0, 0.705);
+}
+
+.register {
+    margin-top: auto;
+    text-align: center;
+    font-size: 15px;
+    font-optical-sizing: auto;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: rgba(0, 0, 0, 0.705);
+    text-decoration: underline;
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolve - Inscription</title>
+    <link rel="stylesheet" href="./register.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&family=League+Spartan:wght@100..900&family=Roboto:wght@900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="logo">evolve</h1>
+        <div class="divider"></div>
+        <div class="register-form">
+            <h2>Inscription</h2>
+            <form id="registerForm">
+                <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
+                <input type="email" id="email" name="email" placeholder="Adresse e-mail" required>
+                <input type="password" id="password" name="password" placeholder="Mot de passe" required>
+                <button type="submit">S'inscrire</button>
+                <a class="ou">OU</a>
+                <a href="login.html">Se connecter</a>
+            </form>
+        </div>
+    </div>
+    <script>
+        const token = getCookie("token");
+
+        if (!token) {
+        } else {
+            fetch("http://127.0.0.1:667/token", {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const welcomeMessage = document.createElement("h1");
+                welcomeMessage.textContent = `Welcome, ${data.username}`;
+                document.body.appendChild(welcomeMessage);
+                window.location.href = "home.html";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split(";").map(cookie => cookie.trim());
+            for (const cookie of cookies) {
+                if (cookie.startsWith(name + "=")) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            fetch(`http://127.0.0.1:667/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username, email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.data) {
+                    window.location.href = "login.html";
+                } else {
+                    const errorMessage = document.createElement("h3");
+                    errorMessage.textContent = "Ce nom d'utilisateur est déjà pris";
+                    errorMessage.style.color = "red"; 
+                    document.getElementById("registerForm").appendChild(errorMessage);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

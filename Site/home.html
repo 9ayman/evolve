@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolve - Accueil</title>
+    <link rel="stylesheet" href="./home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&family=League+Spartan:wght@100..900&family=Roboto:wght@900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="navbar">
+        <h1 class="logo">evolve</h1>
+        <a href="#" class="nav-link"><i class="fas fa-home"></i> Accueil</a>
+        <a href="#" class="nav-link"><i class="fas fa-calendar-alt"></i> Séances</a>
+        <a href="#" class="nav-link"><i class="fas fa-dumbbell"></i> Exercices</a>
+        <a href="#" class="nav-link"><i class="fas fa-plus"></i> Créer</a>
+        <a href="#" class="nav-link bottom"><i class="fas fa-user"></i> Profil</a>
+    </div>
+
+    <button class="logout" type="submit" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+
+    <div id="content" class="content"></div>
+
+    <script>
+        const token = getCookie("token");
+
+        if (!token) {
+            window.location.href = "login.html";
+        } else {
+            fetch("http://127.0.0.1:667/token", {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const welcomeMessage = document.createElement("h1");
+                welcomeMessage.textContent = `Bienvenue, ${data.username} !`;
+                document.getElementById("content").appendChild(welcomeMessage);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split(";").map(cookie => cookie.trim());
+            for (const cookie of cookies) {
+                if (cookie.startsWith(name + "=")) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+
+        function logout() {
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>

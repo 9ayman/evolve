@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolve - Connexion</title>
+    <link rel="stylesheet" href="./login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&family=League+Spartan:wght@100..900&family=Roboto:wght@900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="logo">evolve</h1>
+        <div class="divider"></div>
+        <div class="login">
+            <h2>Connexion</h2>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Nom d'utilisateur" required>
+                <a href="forgot-username.html" class="forgot-username">Nom d'utilisateur oublié ?</a>                
+                <input type="password" id="password" placeholder="Mot de passe" required>
+                <a href="forgot-password.html" class="forgot-password">Mot de passe oublié ?</a>
+                <button class="forgot" type="submit">Se connecter</button>
+                <a class="ou">OU</a>
+                <a class="register" href="register.html">S'inscrire</a>
+            </form>
+        </div>
+    </div>
+    <script>
+        const token = getCookie("token");
+
+        if (!token) {
+
+        } else {
+            fetch("http://127.0.0.1:667/token", {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const welcomeMessage = document.createElement("h1");
+                welcomeMessage.textContent = `Welcome, ${data.username}`;
+                document.body.appendChild(welcomeMessage);
+                window.location.href = "home.html";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split(";").map(cookie => cookie.trim());
+            for (const cookie of cookies) {
+                if (cookie.startsWith(name + "=")) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            fetch("http://127.0.0.1:667/login?username=" + username + "&password=" + password)
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    document.cookie = `token=${data.token}; path=/; expires=${new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toUTCString()}`;
+                    window.location.href = "home.html";
+                } else {
+                    const errorMessage = document.createElement("h3");
+                    errorMessage.textContent = "Nom d'utilisateur ou mot de passe invalide";
+                    errorMessage.style.color = "red"; 
+                    document.getElementById("loginForm").appendChild(errorMessage);                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
