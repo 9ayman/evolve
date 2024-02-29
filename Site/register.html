@@ -19,17 +19,34 @@
                 <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
                 <input type="email" id="email" name="email" placeholder="Adresse e-mail" required>
                 <input type="password" id="password" name="password" placeholder="Mot de passe" required>
+                <p id="passwordError" class="text-red-500 text-sm hidden mb-2">Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.</p>
                 <button type="submit">S'inscrire</button>
                 <a class="ou">OU</a>
                 <a href="login.html">Se connecter</a>
+                
             </form>
         </div>
     </div>
     <script>
+
+        function checkPasswordStrength(password) {
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
+            return passwordRegex.test(password);
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split(";").map(cookie => cookie.trim());
+            for (const cookie of cookies) {
+                if (cookie.startsWith(name + "=")) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+
         const token = getCookie("token");
 
-        if (!token) {
-        } else {
+        if (token) {
             fetch("http://127.0.0.1:667/token", {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -47,22 +64,19 @@
             });
         }
 
-        function getCookie(name) {
-            const cookies = document.cookie.split(";").map(cookie => cookie.trim());
-            for (const cookie of cookies) {
-                if (cookie.startsWith(name + "=")) {
-                    return cookie.substring(name.length + 1);
-                }
-            }
-            return null;
-        }
-
         document.getElementById("registerForm").addEventListener("submit", function(event) {
             event.preventDefault();
             
             const username = document.getElementById("username").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
+
+            if (!checkPasswordStrength(password)) {
+                event.preventDefault();
+                return document.getElementById("passwordError").classList.remove("hidden");
+            } else {
+                document.getElementById("passwordError").classList.add("hidden");
+            }
 
             fetch(`http://127.0.0.1:667/register`, {
                 method: "POST",
